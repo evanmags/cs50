@@ -17,36 +17,41 @@ int main(int argc, string argv[])
     }
     else
     {
-//         get string adn define length
+//         get string and define length
         string plaintext = get_string("paintext: ");
         int length = strlen(plaintext);
-//         get length of key.
+        // get length of arg for looping.
         int arglen = strlen(argv[1]);
+        // placeholder value to avoid error, also allows the first arg to be a non alpha without issue.
         int key = 0;
+        // counter for number of non alpha spaces in string.
         int skip = 0;
 //         loop through string
         for(int i = 0; i < length; i++)
         {   
-           
+           //same as caesar
             int letter = plaintext[i];
             
             if(isupper(plaintext[i]))
             {   
-                printf("%c", plaintext[i]);
-                key = shift(argv[1][(i-skip) % arglen]);
+                // take the first argument
+                // take the current index fron the running loop and take out how manu skipped chars there have been.
+                // modulo out the length of the argument 
+                // result is the index of the letter to use in shift
+                // 'shift' => a wrap function that gets the distance from a or A
+                key = shift(argv[1][(i - skip) % arglen]);
                 letter += key;
                 letter = wrap_letter(letter, 65);
             }
             else if(islower(plaintext[i]))
             {
-                printf("%c", plaintext[i]);
-                key = shift(argv[1][(i-skip) % arglen]);
+                key = shift(argv[1][(i - skip) % arglen]);
                 letter += key;
                 letter = wrap_letter(letter, 97);
             }
             else
             {
-                skip++;
+                skip ++;
             }
             plaintext[i] = (char) letter;
         }
@@ -57,7 +62,8 @@ int main(int argc, string argv[])
 
 int shift(char c)
 {
-   if(isupper(c))
+    // same wrap as below but negates teh added in 'base'
+    if(isupper(c))
     {
         return wrap_letter(c, 65) - 65;
     }
@@ -70,6 +76,8 @@ int shift(char c)
 
 bool check_alpha(string arg)
 {   
+    // loop through to make sure argument is entirely aplha
+    // return false if any case fails.
     int len = strlen(arg);
     for(int i = 0; i < len; i++)
     {
@@ -83,5 +91,6 @@ bool check_alpha(string arg)
 
 int wrap_letter(int letter, int base)
 {
+    // same as caesar
     return ((letter - base) % (26)) + base;
 }

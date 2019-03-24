@@ -8,7 +8,7 @@
 
 int main(int argc, string argv[])
 {
-//     return if not valid hash
+//     return if not valid number of arguments
         if(argc != 2)
         {
            printf("Usage: ./crack hash\n");
@@ -16,31 +16,39 @@ int main(int argc, string argv[])
         }
         else
         {
+            take second arg from args adn it is now the hash
             string hash = argv[1];
             
+            // create string for the salt
             char salt[3];
+            // define the salt as the two left most digits
             salt[0] = hash[0];
             salt[1] = hash[1];
+            // add in a null char
             salt[2] = '\0';
+            // define alphabet to loop through
             char alphabet[] = "\0abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            int len = strlen(hash);
+            // defin initial guess as all null chars
             char pass_attp[6] = "\0\0\0\0\0\0";
+
+            // loop each char as you would gears,
+            // outer most (left) moves fastest, inner most (right) moves slowest
+            // compare at every step until a match is made, true bruteforce...
             for(int fiv = 0; fiv < 52; fiv++) //5th letter in array;
             {
+                pass_attp[4] = alphabet[fiv]; // less pretty location wise, but better performance.
                 for(int fou = 0; fou < 52; fou++) //4th letter in array;
                 {
+                    pass_attp[3] = alphabet[fou];
                     for(int thr = 0; thr < 52; thr++) //3th letter in array;
                     {
+                        pass_attp[2] = alphabet[thr];
                         for(int two = 0; two < 52; two++) //2nd letter in array;
                         {
+                            pass_attp[1] = alphabet[two];
                             for(int one = 0; one < 52; one++) //1st letter in array;
                             {
-                                pass_attp[4] = alphabet[fiv];
-                                pass_attp[3] = alphabet[fou];
-                                pass_attp[2] = alphabet[thr];
-                                pass_attp[1] = alphabet[two];
                                 pass_attp[0] = alphabet[one];
-                                
                                 if(strcmp(hash, crypt(pass_attp, salt)) == 0)
                                 {
                                     printf("%s\n", pass_attp);
