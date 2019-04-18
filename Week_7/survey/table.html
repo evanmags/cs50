@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <div class="container">
+        <h1 class="mb-3">Ice Cream Sundaes!</h1>
+        <table class="table display">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Ice Cream</th>
+                    <th scope="col">Sauces</th>
+                    <th scope="col">Sprinkles</th>
+                    <th scope="col">Nuts</th>
+                    <th scope="col">Banana</th>
+                    <th scope="col">Cherry</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sundae in sundaes: %}
+                    <tr>
+                        <th scope="row">{{ sundae[0] }}</th>
+                        <td>{{ sundae[1] }}</td>
+                        <td>{{ sundae[2] }}</td>
+                        <td class="checkmark">{{ "√" if sundae[3] == "yes" else "" }}</td>
+                        <td class="checkmark">{{ "√" if sundae[4] == "yes" else "" }}</td>
+                        <td class="checkmark">{{ "√" if sundae[5] == "yes" else "" }}</td>
+                        <td class="checkmark">{{ "√" if sundae[6] == "yes" else "" }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

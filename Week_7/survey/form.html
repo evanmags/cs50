@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+    <!-- http://getbootstrap.com/docs/4.1/content/typography/ -->
+    <h1 class="mb-3">Form</h1>
+
+    <!-- http://getbootstrap.com/docs/4.1/components/forms/ -->
+    <form action="/form" method="post">
+        <!-- creating an ice cream sundae -->
+
+        <!--name it-->
+        <div class="form-group">
+            <label for="name">Sundae Name:</label>
+            <input type="text" name="name" class="form-control">
+            <small class="form-text text-muted">This could be the next Banana Split!</small>
+        </div>
+
+        <!--ice cream flavors-->
+        <div class="form-group">
+            <label for="flavor">Choose a Flavor</label>
+            <select multiple name="flavor" class="form-control">
+                <option value='' disabled selected>Ice Cream Flavor</option>
+                <option value="Vanilla">Vanilla</option>
+                <option value="Chocolate">Chocolate</option>
+                <option value="Strawberry">Strawberry</option>
+                <option value="Mint Chip">Mint Chip</option>
+                <option value="Cookies and Cream">Cookies and Cream</option>
+                <option value="Rocky Road">Rocky Road</option>
+            </select>
+        </div>
+
+        <!--sauces-->
+        <div class="form-group">Choose your Sauces<br>
+            <div class="form-check form-check-inline">
+                <input name="sauce" type="checkbox" class="form-check-input" value="Chocolate Syrup">
+                <label class="form-check-label" for="sauce">Chocolate</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input name="sauce" type="checkbox" class="form-check-input" value="Caramel Sauce">
+                <label class="form-check-label" for="sauce">Caramel</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input name="sauce" type="checkbox" class="form-check-input" value="Peanut Butter">
+                <label class="form-check-label" for="sauce">Peanut Butter</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input name="sauce" type="checkbox" class="form-check-input" value="Marshmallow Fluff">
+                <label class="form-check-label" for="sauce">Marshmallow</label>
+            </div>
+        </div>
+        <!--sprinkles-->
+        <div class="form-group">Add Sprinkles?<br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="sprinkles" type="radio" value="yes">
+                <label class="form-check-label">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="sprinkles" type="radio" value="no" checked>
+                <label class="form-check-label">No</label>
+            </div>
+        </div>
+
+        <!--nuts-->
+        <div class="form-group">Add Nuts?<br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="nuts" type="radio" value="yes">
+                <label class="form-check-label">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="nuts" type="radio" value="no" checked>
+                <label class="form-check-label">No</label>
+            </div>
+        </div>
+        <!--banana-->
+        <div class="form-group">Add Banana?<br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="banana" type="radio" value="yes">
+                <label class="form-check-label">Yes</label>
+             </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="banana" type="radio" value="no" checked>
+                <label class="form-check-label">No</label>
+            </div>
+        </div>
+        <!--cherry-->
+        <div class="form-group">A Cherry on Top?<br>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="cherry" type="radio" value="yes">
+                <label class="form-check-label">Yes</label>
+             </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" name="cherry" type="radio" value="no" checked >
+                <label class="form-check-label">No</label>
+            </div>
+        </div>
+        <!-- http://getbootstrap.com/docs/4.1/components/buttons/ -->
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+    </form>
+
+    <script>
+        document.querySelector("form").addEventListener('submit', e => {
+            if(!document.querySelector("input[type='text']").value){
+                alert("You must name your sundae.");
+                e.preventDefault();
+            }
+            else if(!document.querySelector("select").value){
+                alert("You must select at least one ice cream flavor.");
+                e.preventDefault();
+            }
+            else if(true){
+                document.querySelector("input[type='checkbox']").forEach(a => console.log(a))
+                alert("You must select at least one sauce for your sundae.");
+                e.preventDefault();
+            }
+        });
+
+    </script>
+
+{% endblock %}
