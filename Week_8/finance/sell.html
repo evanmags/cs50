@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Sell
+{% endblock %}
+
+{% block main %}
+    <form action="/sell" method="POST">
+        <div class="form-group">
+            <select class="form-control" name="symbol" id="">
+                <option disabled selected value=''>stock</option>
+                {% for stock in holdings %}
+                    <option value={{stock.symbol}}>{{stock.symbol}} - {{stock.company}}</option>
+                {% endfor %}
+            </select>
+            <input autocomplete="off" class="form-control" name="shares" placeholder="Shares" type="text">
+            <small class="form-text text-danger"></small>
+        </div>
+        <button class="btn btn-primary" type="submit">Sell</button>
+    </form>
+
+    <script>
+        function checkForValue(input, message, e){
+            if(!document.querySelector(input).value){
+                document.querySelector('small').textContent = message;
+                e.preventDefault();
+                return false;
+            }
+            return true;
+        }
+        document.querySelector('form').addEventListener('submit', (e)=>{
+            if(document.querySelector('input[name="shares"]').value <= 0){
+                document.querySelector('small').textContent = "You must specify a positive number";
+                return e.preventDefault();
+            }
+            return checkForValue('select', "You must select a ticker symbol", e)
+                && checkForValue('input[name="shares"]', "You must specify a number of shares", e);
+        });
+    </script>
+{% endblock %}

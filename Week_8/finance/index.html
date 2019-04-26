@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Holdings
+{% endblock %}
+
+{% block main %}
+    <h2>Holdings</h2>
+    <table class='table'>
+        <tr>
+            <th scope="col">Symbol</th>
+            <th scope="col">Company</th>
+            <th scope="col">Total Shares</th>
+            <th scope="col">Avg. Cost</th>
+            <th scope="col">Current Price</th>
+            <th scope="col">Current Value</th>
+        </tr>
+        {% for stock in holdings %}
+            <tr>
+                <td>{{ stock['symbol'] }}</td>
+                <td>{{ stock['company'] }}</td>
+                <td>{{ stock['shares'] }}</td>
+                <td>{{ stock['avg_cost']|usd }}</td>
+                <td>{{ stock['cur_price']|usd }}</td>
+                <td>{{ stock['value']|usd }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <p>Available funds: {{ funds|usd }}</p>
+{% endblock %}

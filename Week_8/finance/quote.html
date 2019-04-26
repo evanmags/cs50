@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+    <form action="/quote" method="POST">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Ticker Symbol" type="text">
+            <small class="form-text text-danger"></small>
+        </div>
+        <button class="btn btn-primary" type="submit">Get Quote</button>
+        <div id="add-btn" class="btn btn-small btn-outline-info">Add another</div>
+    </form>
+
+    <script>
+        document.querySelector('#add-btn').addEventListener('click', (e)=>{
+            const clone = document.querySelector('.form-group').cloneNode(true);
+            clone.querySelector('input').value = '';
+            e.target.parentNode.insertBefore(clone, e.target);
+        });
+        document.querySelector('form').addEventListener('submit', (e)=>{
+            if(!document.querySelector('input[name="stock"]').value){
+                document.querySelector('small').textContent = "You must choose at least one ticker symbol";
+                e.preventDefault();
+            }
+        });
+    </script>
+{% endblock %}

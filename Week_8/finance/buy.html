@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy
+{% endblock %}
+
+{% block main %}
+    <form action="/buy" method="POST">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Ticker Symbol" type="text">
+            <input autocomplete="off" autofocus class="form-control" name="shares" placeholder="Shares" type="text">
+            <small class="form-text text-danger"></small>
+        </div>
+        <button class="btn btn-primary" type="submit">Buy</button>
+    </form>
+
+    <script>
+        function checkForValue(input, message, e){
+            if(!document.querySelector(input).value){
+                document.querySelector('small').textContent = message;
+                e.preventDefault();
+                return false;
+            }
+            return true;
+        }
+        document.querySelector('form').addEventListener('submit', (e)=>{
+            if(document.querySelector('input[name="shares"]').value < 0){
+                document.querySelector('small').textContent = "You must specify a positive number";
+                return e.preventDefault();
+            }
+            return checkForValue('input[name="symbol"]', "You must select a ticker symbol", e)
+                && checkForValue('input[name="shares"]', "You must specify a number of shares", e);
+        });
+    </script>
+{% endblock %}

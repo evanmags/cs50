@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <form action="/register"  method="POST">
+        <div class="form-group">
+            <input type="text" name="username" class="form-control" autocomplete="off" autofocus placeholder="Username">
+            <small class="form-text text-muted">Please choose a username.</small>
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" class="form-control" autocomplete="off" autofocus placeholder="Password">
+            <div class="btn btn-sm btn-info pass-btn">Show</div>
+            <small class="form-text text-muted">Please choose a password.</small>
+        </div>
+        <div class="form-group">
+            <input type="password" name="confirmation" class="form-control" autocomplete="off" autofocus placeholder="Confirm Password">
+            <div class="btn btn-sm btn-info pass-btn">Show</div>
+            <small class="form-text text-muted">Please confirm your password.</small>
+        </div>
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+
+    <script>
+        // toggle state of password field
+        document.querySelectorAll('.pass-btn').forEach(i => {
+            i.addEventListener('click', (e) => {
+                const sibling = e.target.parentElement.querySelector('input')
+                if(sibling.getAttribute('type') == 'text'){
+                    e.target.textContent = 'Show'
+                    sibling.setAttribute('type', 'password');
+                }
+                else {
+                    e.target.textContent = 'Hide'
+                    sibling.setAttribute('type', 'text');
+                }
+                e.target.classList.toggle("btn-info")
+                e.target.classList.toggle("btn-outline-info")
+            })
+        })
+
+        const fields = document.querySelectorAll('input');
+        const small = document.querySelectorAll('small');
+
+        function changeClasses(i, classToAdd){
+            small[i].classList.remove('text-muted');
+            small[i].classList.remove('text-danger');
+            small[i].classList.remove('text-success');
+            small[i].classList.add(classToAdd);
+        }
+
+        function smallMessage(i, message, type){
+            small[i].textContent = message;
+            changeClasses(i, `text-${type}`)
+        }
+
+        fields[0].addEventListener('input', (e) => {
+            fetch(`/check?username=${e.target.value}`)
+                .then((data) => data.json())
+                .then((data) => {
+                    console.log(data);
+                    data ? smallMessage(0, "Username available :)", 'success')
+                         : smallMessage(0, "Username unavailable :(", 'danger');
+                });
+        });
+
+        // form validation
+        document.querySelector('form').addEventListener('submit', (e) => {
+            fields.forEach((input, i)=>{
+                if(input.value == ""){
+                    e.preventDefault();
+                    smallMessage(i, "This field is required", 'danger')
+                }
+            });
+            if(fields[1].value !== fields[2].value){
+                e.preventDefault();
+                smallMessage(2, "Your passwords must match", 'danger')
+            }
+        });
+
+    </script>
+{% endblock %}

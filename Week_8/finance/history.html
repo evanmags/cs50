@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <h2>Transaction History</h2>
+    <table class='table'>
+        <tr>
+            <th scope="col">Type</th>
+            <th scope="col">Symbol</th>
+            <th scope="col">Date</th>
+            <th scope="col">Price</th>
+            <th scope="col">Shares</th>
+            <th scope="col">+/-</th>
+        </tr>
+        {% for item in history %}
+            <tr>
+                <td>{{ item['type'] }}</td>
+                <td>{{ item['symbol'] }}</td>
+                <td>{{ item['trans_date'] }}</td>
+                <td>{{ item['price']|usd }}</td>
+                <td>{{ item['quantity'] }}</td>
+                <td>{{ ("-" if item['type'] == 'buy' else '+') + (item['price'] * item['quantity'])|usd}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
